@@ -9,6 +9,7 @@ const app = express();
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.static('public')); // Serve HTML, CSS from public folder
 
 // MongoDB Connection
 mongoose.connect('mongodb://localhost:27017/reservationsDB', {
@@ -29,7 +30,6 @@ const reservationSchema = new mongoose.Schema({
   requests: String
 });
 
-
 const Reservation = mongoose.model('Reservation', reservationSchema);
 
 // POST route to save reservation
@@ -43,7 +43,7 @@ app.post('/api/reservations', async (req, res) => {
   }
 });
 
-// Start server on preferred port (e.g., 5000)
+// Start server
 const PORT = 5000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on http://localhost:${PORT}`);
